@@ -1,3 +1,0 @@
-/*
-  File for the font that will be displayed on the emulator
- */
