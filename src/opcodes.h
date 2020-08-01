@@ -1,5 +1,6 @@
 /*
   Header for opcode functions
  */
+#include <stdint.h>
 
-int check_opcode(char* opcode);
+int check_opcode(uint16_t opcode);

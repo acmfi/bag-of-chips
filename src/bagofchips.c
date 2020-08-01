@@ -1,6 +1,6 @@
 /*
   Main file for bag-of-chips CHIP-8 emulator
- */
+*/
 
 #include <stdint.h>
 #include <string.h>
@@ -33,14 +33,17 @@ uint8_t vF = 0x00;
 
 
 int main (int argc, char** argv){
-	printf("imagine this emulator is running\n\n");
+    printf("Imagine this emulator is running\n\n");
 
+    uint16_t opcode = (uint16_t) strtol(argv[1], NULL, 16);
+    
+    if (argc < 2)
+	printf("No opcode provided as an argument\n");
+    else {
 	printf("Opcode: ");
-	if(argc < 2) printf("no opcode at all\n");
-	else check_opcode(argv[1]);
-	printf("\n");
+	check_opcode(opcode);
+    }
+    printf("\n");
 
-	int i = 0;
-	for (;i<10;i++) printf("VIDEO\tGAMES\n");
-	return 0;
+    return 0;
 }
