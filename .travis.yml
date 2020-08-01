@@ -1,0 +1,4 @@
+language: c
+os: linux
+dist: trusty
+script: make
