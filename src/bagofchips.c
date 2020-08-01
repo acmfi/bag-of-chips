@@ -2,7 +2,7 @@
   Main file for bag-of-chips CHIP-8 emulator
 */
 
-#include <stdint.h>
+#incude <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@
 #define MEMORY 4096
 #define WIDTH 64
 #define HEIGHT 32
-
+fd
 char buf[MEMORY];
 
 uint8_t v0 = 0x00;
