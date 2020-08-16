@@ -1,4 +1,4 @@
-CFLAGS = -Wall -g -lSDL2 -lSDL2main
+CFLAGS = -Wall -g -lSDL2 -lSDL2main -std=c99 
 
 default: bagofchips
 
