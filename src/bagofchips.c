@@ -6,7 +6,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "SDL2/SDL.h"
 #include "opcodes.h"
+#include "display.h"
 
 #define MEMORY 4096
 #define WIDTH 64
@@ -35,15 +37,27 @@ uint8_t vF = 0x00;
 int main (int argc, char** argv){
     printf("Imagine this emulator is running\n\n");
 
-    uint16_t opcode = (uint16_t) strtol(argv[1], NULL, 16);
+    /* uint16_t opcode = (uint16_t) strtol(argv[1], NULL, 16); */
     
-    if (argc < 2)
-	printf("No opcode provided as an argument\n");
-    else {
-	printf("Opcode: ");
-	check_opcode(opcode);
-    }
-    printf("\n");
+    /* if (argc < 2) */
+    /* 	printf("No opcode provided as an argument\n"); */
+    /* else { */
+    /* 	printf("Opcode: "); */
+    /* 	check_opcode(opcode); */
+    /* } */
+    /* printf("\n"); */
 
+    switch(init_window(20)) {
+    case 1:
+	fprintf(stderr, "Wrong scaling factor for the main display window; it should be between 1 and %d", MAX_SCALE_FACTOR);
+	break;
+    case 2:
+	fprintf(stderr, "SDL error, window couldn't be created.");
+	break;
+    case 3:
+	fprintf(stderr, "SDL error, renderer couldn't be created.");
+	break;
+    }
+    
     return 0;
 }
