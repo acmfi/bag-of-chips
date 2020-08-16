@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include "display.h"
-#include "stack.h"
 
 #define MEM_SIZE 4096
 #define WIDTH 64
@@ -148,16 +147,16 @@ int execute(uint16_t instr)
         VX = rand() & op_nibbles.NN;
         break;
     case 0xD: // draw(Vx,Vy,N)
-        draw(VX,VY,op_nibbles.N);
+        //draw(VX,VY,op_nibbles.N);
         break;
     }
     return 0;
 }
-int main(int argc, char *argv)
-{
-    while (1)
-    {
-        uint16_t instr = fetch();
-        execute(instr);
-    }
-}
+/* int main(int argc, char *argv) */
+/* { */
+/*     while (1) */
+/*     { */
+/*         uint16_t instr = fetch(); */
+/*         execute(instr); */
+/*     } */
+/* } */
