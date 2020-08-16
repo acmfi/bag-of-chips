@@ -1,5 +1,5 @@
 #include "display.h"
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
 #include <stdio.h>
 
 #define MAX_SCALE_FACTOR 25
