@@ -1,9 +1,9 @@
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -lSDL2 -lSDL2main
 
 default: bagofchips
 
 bagofchips: 
-	gcc $(CFLAGS) src/bagofchips.c src/opcodes.c -o bagofchips
+	clang $(CFLAGS) src/*.c -o bagofchips
 
 clean:
 	rm -rf bagofchips
