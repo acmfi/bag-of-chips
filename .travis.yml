@@ -1,9 +1,4 @@
 language: c
-
-compiler:
-  - gcc
-  - clang
-
 os: linux
 dist: trusty
 before_install:
