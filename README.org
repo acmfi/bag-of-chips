@@ -23,6 +23,20 @@
  - Temporizador de 8 bits que se decrementa 60 veces por segundo hasta que llega a 0.
  - Temporizador de 8 bits que funciona como el anterior, pero si distinto de 0 pita.
  - Keypad de 16 botones (4 x 4).
+
+
+** Documentación de apoyo
+Iré actualizando esto a la que vaya viendo artículos nuevos:
+ - [[http://devernay.free.fr/hacks/chip8/C8TECH10.HTM]]
+ - [[https://github.com/trapexit/chip-8_documentation]]
+ - [[http://mattmik.com/files/chip8/mastering/chip8.html]]
+ - [[https://chip-8.github.io/extensions/]]
+ - [[https://courses.ece.cornell.edu/ece5990/ECE5725_Fall2016_Projects/Lab_group_bcp39_rk534/cpu.html]]
+ - http://www.pong-story.com/chip8/
+ - [[https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html]]
+ - [[https://johnearnest.github.io/chip8Archive/]]
+ - [[https://tobiasvl.github.io/blog/write-a-chip-8-emulator/]]
+ 
 *** Opcodes
 (from [[https://github.com/trapexit/chip-8_documentation]])
 |--------+----------------+----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -96,14 +110,3 @@
 | FXFB   | IN VX          | CHIP-8X        | Copy contents from `input port` to `VX`. (Waits for EF4=1)                                                                                                                                                                                                                                                                                                                                |
 | FXF8   | OUT VX         | CHIP-8X        | Output contents of `VX` to `output port`. Used to program simple sound.                                                                                                                                                                                                                                                                                                                   |
 |--------+----------------+----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-
-** Documentación de apoyo
-Iré actualizando esto a la que vaya viendo artículos nuevos:
- - [[https://github.com/trapexit/chip-8_documentation]]
- - [[http://mattmik.com/files/chip8/mastering/chip8.html]]
- - [[https://chip-8.github.io/extensions/]]
- - [[https://courses.ece.cornell.edu/ece5990/ECE5725_Fall2016_Projects/Lab_group_bcp39_rk534/cpu.html]]
- - http://www.pong-story.com/chip8/
- - [[https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html]]
- - [[https://johnearnest.github.io/chip8Archive/]]
- - [[https://tobiasvl.github.io/blog/write-a-chip-8-emulator/]]
