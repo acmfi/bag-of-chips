@@ -1,36 +1,47 @@
-#include <inttypes.h>
+#include "stack.h"
 
-#define MAXSIZE 16
-
-int top = -1;
-uint16_t stack[MAXSIZE];
-
-void push(uint16_t dir)
+Stack *newStack(int size)
 {
-    if (!isFull())
+    Stack *stack = malloc(sizeof(Stack));
+    stack->top = -1;
+    stack->maxsize = size;
+    stack->elements = malloc(size * sizeof(uint16_t));
+    return stack;
+}
+void freeStack(Stack *st)
+{
+    free(st->elements);
+    free(st);
+}
+
+void push(Stack *st, uint16_t dir)
+{
+    if (!isFull(st))
     {
-        stack[++top] = dir;
+        st->elements[++st->top] = dir;
     }
 }
-int pop()
+int pop(Stack *st)
 {
-    if (!isEmpty()){
-        return stack[top--];
+    if (!isEmpty(st))
+    {
+        return st->elements[st->top--];
     }
     return -1;
 }
-uint16_t peek()
+uint16_t peek(Stack *st)
 {
-    return stack[top];
+    return st->elements[st->top];
 }
-int isEmpty()
+int isEmpty(Stack *st)
 {
-    return top == -1;
+    return st->top == -1;
 }
-int isFull(){
-    return top == MAXSIZE;
-}
-int size()
+int isFull(Stack *st)
 {
-    return top+1;
+    return st->top == st->maxsize;
+}
+int size(Stack *st)
+{
+    return st->top + 1;
 }
