@@ -42,6 +42,7 @@ uint16_t peek(Stack *st, int *error)
     }
     error = -1;
     return 0;
+
 }
 int isEmpty(Stack *st)
 {
@@ -55,3 +56,4 @@ int size(Stack *st)
 {
     return st->top + 1;
 }
+
