@@ -42,7 +42,7 @@ struct nibbles {
 };
 
 uint8_t lo(uint16_t address) { return (uint8_t)address; }
-uint8_t hi(uint16_t address) { return (uint8_t)address >> 8; }
+uint8_t hi(uint16_t address) { return (uint8_t)(address >> 8); }
 uint16_t fetch() {
   uint16_t opcode = (uint16_t)mem[PC] << 8 | mem[PC + 1];
   PC += 2;
