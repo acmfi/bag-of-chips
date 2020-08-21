@@ -1,4 +1,9 @@
 language: c
 os: linux
 dist: trusty
+before_install:
+  - sudo apt-get -y install libegl1-mesa-dev libgles2-mesa-dev libsdl2-2.0 libsdl2-dev
+addons:
+  apt:
+    update: true
 script: make
