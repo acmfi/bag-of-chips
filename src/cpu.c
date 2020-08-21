@@ -43,7 +43,7 @@ uint8_t lo(uint16_t address)
 }
 uint8_t hi(uint16_t address)
 {
-    return (uint8_t)address >> 8;
+    return (uint8_t)(address >> 8);
 }
 uint16_t fetch()
 {
