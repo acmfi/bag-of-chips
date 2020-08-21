@@ -12,28 +12,26 @@ void free_stack(Stack *st) {
   free(st);
 }
 
-void push(Stack *st, uint16_t dir, int *error) {
+int push(Stack *st, uint16_t dir) {
   if (!isFull(st)) {
-    error = 0;
     st->elements[++st->top] = dir;
+    return 0;
   }
-  error = -1;
+  return -1;
 }
-uint16_t pop(Stack *st, int *error) {
+int pop(Stack *st, uint16_t *out) {
   if (!isEmpty(st)) {
-    error = 0;
-    return st->elements[st->top--];
+    out = st->elements[st->top--];
+    return 0;
   }
-  error = -1;
-  return 0;
+  return -1;
 }
-uint16_t peek(Stack *st, int *error) {
+int peek(Stack *st, uint16_t *out) {
   if (!isEmpty(st)) {
-    error = 0;
-    return st->elements[st->top];
+    out = st->elements[st->top];
+    return 0;
   }
-  error = -1;
-  return 0;
+  return -1;
 }
 int isEmpty(Stack *st) { return st->top == -1; }
 int isFull(Stack *st) { return st->top == st->maxsize; }

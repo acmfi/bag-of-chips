@@ -8,16 +8,16 @@ typedef struct Stack {
 
 // creates a new stack of size "int size"
 Stack *create_stack(int size);
-// frees memory allocated by the stack
+// frees memory allocated by thes stack
 void free_stack(Stack *st);
 // adds new direction to the stack
 // leaves a 0 on error parameter if everything went well, -1 if it didn't
-void push(Stack *st, uint16_t dir, int *error);
+int push(Stack *st, uint16_t dir);
 // gets last element from the stack
 // leaves a 0 on error parameter if everything went well, -1 if it didn't
-uint16_t pop(Stack *st, int *error);
+int pop(Stack *st, uint16_t *out);
 // gets value from the last element
 // leaves a 0 on error parameter if everything went well, -1 if it didn't
-uint16_t peek(Stack *st, int *error);
+int peek(Stack *st, uint16_t *out);
 // gets stack size
 int size(Stack *st);
