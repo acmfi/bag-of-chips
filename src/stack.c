@@ -14,24 +14,34 @@ void freeStack(Stack *st)
     free(st);
 }
 
-void push(Stack *st, uint16_t dir)
+void push(Stack *st, uint16_t dir, int *error)
 {
     if (!isFull(st))
     {
+        error = 0;
         st->elements[++st->top] = dir;
     }
+    error = -1;
 }
-int pop(Stack *st)
+uint16_t pop(Stack *st, int *error)
 {
     if (!isEmpty(st))
     {
+        error = 0;
         return st->elements[st->top--];
     }
-    return -1;
+    error = -1;
+    return 0;
 }
-uint16_t peek(Stack *st)
+uint16_t peek(Stack *st, int *error)
 {
-    return st->elements[st->top];
+    if (!isEmpty(st))
+    {
+        error = 0;
+        return st->elements[st->top];
+    }
+    error = -1;
+    return 0;
 }
 int isEmpty(Stack *st)
 {
