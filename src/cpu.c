@@ -32,8 +32,7 @@ uint8_t sound_timer = 0;
 // error managing variable
 int *error;
 
-struct nibbles
-{
+struct nibbles {
   uint8_t I : 4;     // instruction type first 4 bits
   uint8_t X : 4;     // second nibble
   uint8_t Y : 4;     // third nibble
@@ -44,14 +43,14 @@ struct nibbles
 
 uint8_t lo(uint16_t address) { return (uint8_t)address; }
 uint8_t hi(uint16_t address) { return (uint8_t)(address >> 8); }
-uint16_t fetch()
-{
+
+uint16_t fetch() {
   uint16_t opcode = (uint16_t)mem[PC] << 8 | mem[PC + 1];
   PC += 2;
   return opcode;
 }
-struct nibbles decode(uint16_t opcode)
-{
+
+struct nibbles decode(uint16_t opcode) {
   struct nibbles op_nibbles;
   op_nibbles.I = (0xF000 & opcode) >> 12;
   op_nibbles.X = (0x0F00 & opcode) >> 8;
@@ -61,39 +60,31 @@ struct nibbles decode(uint16_t opcode)
   op_nibbles.NNN = (0x0FFF & opcode);
   return op_nibbles;
 }
-int execute(uint16_t instr)
-{
+
+int execute(uint16_t instr) {
   struct nibbles op_nibbles = decode(instr);
 
-  switch (op_nibbles.I)
-  {
+  switch (op_nibbles.I) {
   case 0x0: // special functions
-    if (op_nibbles.X == 0)
-    {
-      if (op_nibbles.NN == 0xE0)
-      {
+    if (op_nibbles.X == 0) {
+      if (op_nibbles.NN == 0xE0) {
         // CLEAR SCREEN
-      }
-      else if (op_nibbles.NN == 0xEE)
-      {
+      } else if (op_nibbles.NN == 0xEE) {
         // return
-        if (pop(stack, &PC))
-        {
+        PC = pop(stack, error);
+        if (error) {
           perror("invalid return value");
           exit(1);
         }
       }
-    }
-    else
-    {
+    } else {
       // 0x0NNN : CALL NNN
-
-      if (push(stack, PC))
-      {
+      push(stack, PC, error);
+      PC = op_nibbles.NNN;
+      if (error) {
         perror("StackOverflow :3");
         exit(1);
       }
-      PC = op_nibbles.NNN;
     }
     break;
   case 0x1: // inconditional jump
@@ -119,8 +110,7 @@ int execute(uint16_t instr)
     VX += op_nibbles.NN;
     break;
   case 0x8: // logic operations and assignment
-    switch (op_nibbles.N)
-    {
+    switch (op_nibbles.N) {
     case 0x0: // Vx=Vy
       VX = VY;
       break;
@@ -219,18 +209,17 @@ int execute(uint16_t instr)
   return 0;
 }
 
-int loadFont(char *fontFile)
-{
+int loadFont(char *fontFile) {
   FILE *font = fopen(fontFile, "r");
   uint8_t val;
   int elems = -1;
   fscanf(font, "%d", val);
-  while (val != EOF && elems < 0x201)
-  {
+  while (val != EOF && elems < 0x201) {
     mem[++elems] = val;
     fscanf(font, "%d", val);
   }
 }
+
 int main(int argc, char *argv)
 {
   loadFont("font");
