@@ -27,7 +27,7 @@ uint8_t I = 0x00;
 
 // two kinds of timer . both work at 60Hz
 uint8_t delay_timer = 0;
-uint8_t beep_timer = 0;
+uint8_t sound_timer = 0;
 
 // error managing variable
 int *error;
@@ -43,11 +43,13 @@ struct nibbles {
 
 uint8_t lo(uint16_t address) { return (uint8_t)address; }
 uint8_t hi(uint16_t address) { return (uint8_t)(address >> 8); }
+
 uint16_t fetch() {
   uint16_t opcode = (uint16_t)mem[PC] << 8 | mem[PC + 1];
   PC += 2;
   return opcode;
 }
+
 struct nibbles decode(uint16_t opcode) {
   struct nibbles op_nibbles;
   op_nibbles.I = (0xF000 & opcode) >> 12;
@@ -58,6 +60,7 @@ struct nibbles decode(uint16_t opcode) {
   op_nibbles.NNN = (0x0FFF & opcode);
   return op_nibbles;
 }
+
 int execute(uint16_t instr) {
   struct nibbles op_nibbles = decode(instr);
 
@@ -147,6 +150,61 @@ int execute(uint16_t instr) {
   case 0xD: // draw(Vx,Vy,N)
     draw(VX, VY, op_nibbles.N);
     break;
+  case 0xE: // check keypresses
+    if (op_nibbles.NN == 0x9E)
+    {
+      // key X is pressed
+      PC += key() == VX;
+    }
+    else if (op_nibbles.NN == 0xA1)
+    {
+      // key X not pressed
+      PC += key() != VX;
+    }
+    break;
+  case 0xF: // memory, timers, sprites
+    switch (op_nibbles.NN)
+    {
+    case 0x07:
+      // get dalay
+      VX = delay_timer;
+      break;
+    case 0x0A:
+      // get key
+      VX = get_key();
+      break;
+    case 0x15:
+      // set delay
+      delay_timer = VX;
+      break;
+    case 0x18:
+      sound_timer = VX;
+      break;
+    case 0x1E:
+      I += VX;
+      break;
+    case 0x29:
+      I = sprite(VX);
+      break;
+    case 0x33:
+      mem[I] = VX / 100;
+      mem[I + 1] = (VX % 100) / 10;
+      mem[I + 2] = (VX % 100) % 10;
+      break;
+    case 0x55: // dump registers
+      for (int i = 0; i < op_nibbles.X; i++)
+      {
+        mem[I + i] = regs[i];
+      }
+      break;
+    case 0x65: // load registers
+      for (int i = 0; i < op_nibbles.X; i++)
+      {
+        regs[i] = mem[I + i];
+      }
+      break;
+    }
+    break;
   }
   return 0;
 }
@@ -161,11 +219,15 @@ int loadFont(char *fontFile) {
     fscanf(font, "%d", val);
   }
 }
-int main(int argc, char *argv) {
+
+int main(int argc, char *argv)
+{
   loadFont("font");
-  stack = newStack(16);
-  while (1) {
+  stack = create_stack(16);
+  while (1)
+  {
     uint16_t instr = fetch();
     execute(instr);
   }
+  free_stack(stack);
 }
